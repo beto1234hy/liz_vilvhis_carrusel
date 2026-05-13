@@ -1,7 +1,7 @@
 <?php
 
 // MariaDB
-$mysql = new mysqli("localhost", "root", "", "galeria");
+$mysql = new mysqli("localhost", "galeria_user", "12345678", "galeria");
 
 // PostgreSQL
 $pg = new PDO(
