@@ -55,6 +55,7 @@ function renderCarrusel() {
 
             <button id="btnAnterior" onclick="cambiarImagen(-1)">← Anterior</button>
             <button id="btnSiguiente" onclick="cambiarImagen(1)">Siguiente →</button>
+            <button id="btnEliminar" onclick="eliminarImagen()" style="margin-left:10px; color:red;">🗑 Eliminar</button>
 
         </div>
     `;
@@ -67,15 +68,12 @@ function cargarImagenActual() {
     const contenedor = document.getElementById("imagenContainer");
     const contador = document.getElementById("contadorImg");
 
-    // Mostrar loading mientras carga
     contenedor.innerHTML = `<p>Cargando imagen ${indiceActual + 1}...</p>`;
     contador.innerText = `${indiceActual + 1} / ${imagenes.length}`;
 
-    // Actualizar URL sin recargar la página
     const ruta = imagenes[indiceActual].ruta;
     history.pushState(null, "", "?imagen=" + encodeURIComponent(ruta));
 
-    // Crear imagen y cargarla lazy
     const img = new Image();
     img.style.maxWidth = "500px";
     img.style.maxHeight = "400px";
@@ -101,6 +99,27 @@ function cambiarImagen(direccion) {
     if (indiceActual >= imagenes.length) indiceActual = 0;
 
     cargarImagenActual();
+}
+
+// ✅ Eliminar imagen actual
+async function eliminarImagen() {
+    const img = imagenes[indiceActual];
+
+    if (!confirm("¿Seguro que quieres eliminar esta imagen?")) return;
+
+    const formData = new FormData();
+    formData.append("id", img.id);
+    formData.append("ruta", img.ruta);
+
+    const res = await fetch("php/eliminar.php", {
+        method: "POST",
+        body: formData
+    });
+
+    const text = await res.text();
+    mensaje.innerText = text;
+
+    await cargarImagenes();
 }
 
 // Iniciar al cargar la página
