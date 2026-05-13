@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($fila && password_verify($password, $fila["password"])) {
         $_SESSION["usuario"] = $fila["usuario"];
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
     } else {
         $error = "Usuario o contraseña incorrectos";
