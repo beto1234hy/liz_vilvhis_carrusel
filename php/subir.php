@@ -22,7 +22,7 @@ if (!in_array($extension, $permitidas)) {
 $nombre = uniqid('img_', true) . '.' . $extension;
 $ruta   = "uploads/" . $nombre;
 
-$carpetaDestino = "C:/xampp/htdocs/galeria/uploads/";
+$carpetaDestino = "/var/www/jvilchis/liz_vilvhis_carrusel/uploads/";
 if (!is_dir($carpetaDestino)) {
     mkdir($carpetaDestino, 0755, true);
 }
